@@ -1,0 +1,25 @@
+services:
+    flask:
+        container_name: flask
+        image: 0xdarkshark/todo-flask
+        ports:
+            - "2000:5000"
+        depends_on:
+            - db
+        networks:
+            - app-network
+    db:
+        container_name: db
+        image: 0xdarkshark/todo-db
+        environment:
+            - MYSQL_ROOT_PASSWORD=password
+            - MYSQL_DATABASE=todo_app
+        volumes:
+            - db_data:/var/lib/mysql
+        networks:
+            - app-network
+volumes:
+    db_data:
+networks:
+    app-network:
+        driver: bridge
